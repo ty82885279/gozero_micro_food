@@ -1,0 +1,16 @@
+Name: user.rpc
+ListenOn: 127.0.0.1:8080
+
+DataSource: root:root123.@(127.0.0.1:3306)/foodguides?parseTime=true
+Table: user
+Cache:
+  - Host: localhost:6379
+
+AccessSecret: ad879037-d3fd-tghj-112d-6bfc35d54b7d
+AccessExpire: 86400
+Salt: ^&yh
+
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: user.rpc

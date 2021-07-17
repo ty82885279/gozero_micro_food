@@ -1,0 +1,64 @@
+syntax = "v1"
+
+info(
+	title: "type title here"
+	desc: "type desc here"
+	author: "lee"
+	email: "type email here"
+	version: "type version here"
+)
+
+type LoginRequest {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type LoginResponse {
+	UserReply
+}
+
+type RegisterRequest {
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+type RegisteResponse {
+	UserReply
+}
+type UserinfoRequest {
+	Userid string `json:"userid"`
+	Token  string `json:"token"`
+}
+
+type UserinfoResponse {
+	UserReply
+}
+
+type UserReply {
+	Id       int64  `json:"id"`
+	UserName string `json:"userName"`
+	Email    string `json:"email"`
+	JwtToken
+}
+type JwtToken {
+	AccessToken  string `json:"accessToken,omitempty"`
+	AccessExpire int64  `json:"accessExpire,omitempty"`
+	RefreshAfter int64  `json:"refreshAfter,omitempty"`
+}
+
+service user-api {
+	@handler Login // 用户登录
+	post /users/login(LoginRequest) returns (LoginResponse)
+	
+	@handler Register // 用户注册
+	post /users/register(RegisterRequest) returns (RegisteResponse)
+}
+
+@server (
+	jwt:Auth
+)
+service user-api {
+	
+	@handler UserInfo // 用户信息
+	post /users/userinfo(UserinfoRequest) returns (UserinfoResponse)
+}
